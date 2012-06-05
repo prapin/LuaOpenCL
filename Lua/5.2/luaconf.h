@@ -515,6 +515,10 @@
 
 
 
+#define LUA_PROMPT		"> "
+#define LUA_PROMPT2		">> "
+#define LUA_MAXINPUT		512
+
 
 /* =================================================================== */
 
@@ -524,6 +528,19 @@
 */
 
 
+#if defined(LUA_USE_READLINE)
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#define xmalloc malloc
+#define xfree free
+#endif
+struct lua_State;
+typedef  int (*lua_pfreadline)(struct lua_State* L, char** buffer, const char* prompt);
+typedef void (*lua_pfsaveline)(struct lua_State* L, int idx);
+typedef void (*lua_pffreeline)(struct lua_State* L, char* buffer);
+#define READLINE_REGISTRY "Readline"
+extern int luaopen_lreadline(struct lua_State *L); 
 
 #endif
 

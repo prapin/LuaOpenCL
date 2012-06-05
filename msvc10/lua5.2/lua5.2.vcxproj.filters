@@ -107,6 +107,9 @@
     <ClCompile Include="../../Lua/5.2/lzio.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Lua\5.2\lreadline.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="../../Lua/5.2/lapi.h">

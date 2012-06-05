@@ -3,7 +3,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>
     <LuaVersion>5.2</LuaVersion>
-    <OpenCLVersion>1.1</OpenCLVersion>
+    <OpenCLVersion>1.2</OpenCLVersion>
     <CharacterSet>Unicode</CharacterSet>
     <OutDir>../bin/$(Platform)$(Configuration)\</OutDir>
     <IntDir>../obj/$(ProjectName)/$(Platform)$(Configuration)\</IntDir>
@@ -14,9 +14,9 @@
 
   <ItemDefinitionGroup>
     <ClCompile>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_AFXDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_AFXDLL;LUA_USE_DYNAMIC_READLINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>../../lua/$(LuaVersion);../../OpenCL/1.1;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../lua/$(LuaVersion);../../OpenCL/$(OpenCLVersion);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>

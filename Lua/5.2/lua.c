@@ -55,36 +55,6 @@
 #endif
 
 
-/*
-** lua_readline defines how to show a prompt and then read a line from
-** the standard input.
-** lua_saveline defines how to "save" a read line in a "history".
-** lua_freeline defines how to free a line read by lua_readline.
-*/
-#if defined(LUA_USE_READLINE)
-
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#define lua_readline(L,b,p)     ((void)L, ((b)=readline(p)) != NULL)
-#define lua_saveline(L,idx) \
-        if (lua_rawlen(L,idx) > 0)  /* non-empty line? */ \
-          add_history(lua_tostring(L, idx));  /* add it to history */
-#define lua_freeline(L,b)       ((void)L, free(b))
-
-#elif !defined(lua_readline)
-
-#define lua_readline(L,b,p)     \
-        ((void)L, fputs(p, stdout), fflush(stdout),  /* show prompt */ \
-        fgets(b, LUA_MAXINPUT, stdin) != NULL)  /* get line */
-#define lua_saveline(L,idx)     { (void)L; (void)idx; }
-#define lua_freeline(L,b)       { (void)L; (void)b; }
-
-#endif
-
-
-
-
 static lua_State *globalL = NULL;
 
 static const char *progname = LUA_PROGNAME;
@@ -263,12 +233,36 @@ static int incomplete (lua_State *L, int status) {
 }
 
 
+static int lua_defaultreadline(lua_State* L, char** buffer, const char* prompt) 
+{
+  (void)L;
+  fputs(prompt, stdout);
+  fflush(stdout);  /* show prompt */ \
+  return fgets(*buffer, LUA_MAXINPUT, stdin) != NULL;  /* get line */
+}
+
 static int pushline (lua_State *L, int firstline) {
   char buffer[LUA_MAXINPUT];
   char *b = buffer;
   size_t l;
-  const char *prmt = get_prompt(L, firstline);
-  if (lua_readline(L, b, prmt) == 0)
+  const char *prmt;
+  lua_pfreadline lua_readline = NULL;
+  lua_pffreeline lua_freeline = NULL;
+  int top = lua_gettop(L);
+
+  lua_getfield(L, LUA_REGISTRYINDEX, READLINE_REGISTRY);
+  if(lua_istable(L, -1))
+  {
+	  lua_getfield(L, -1, "readline");
+	  lua_readline = (lua_pfreadline)lua_topointer(L, -1);
+	  lua_getfield(L, -2, "freeline");
+	  lua_freeline = (lua_pffreeline)lua_topointer(L, -1);
+  }
+  if(lua_readline == NULL)
+	  lua_readline = lua_defaultreadline;
+  lua_settop(L, top);
+  prmt = get_prompt(L, firstline);
+  if (lua_readline(L, &b, prmt) == 0)
     return 0;  /* no input */
   l = strlen(b);
   if (l > 0 && b[l-1] == '\n')  /* line ends with newline? */
@@ -277,13 +271,21 @@ static int pushline (lua_State *L, int firstline) {
     lua_pushfstring(L, "return %s", b+1);  /* change it to `return' */
   else
     lua_pushstring(L, b);
-  lua_freeline(L, b);
+  if(lua_freeline)
+	lua_freeline(L, b);
   return 1;
 }
 
 
 static int loadline (lua_State *L) {
   int status;
+  lua_pfsaveline lua_saveline = NULL;
+  lua_getfield(L, LUA_REGISTRYINDEX, READLINE_REGISTRY);
+  if(lua_istable(L, -1))
+  {
+	  lua_getfield(L, -1, "saveline");
+	  lua_saveline = (lua_pfsaveline)lua_topointer(L, -1);
+  }
   lua_settop(L, 0);
   if (!pushline(L, 1))
     return -1;  /* no input */
@@ -298,7 +300,8 @@ static int loadline (lua_State *L) {
     lua_insert(L, -2);  /* ...between the two lines */
     lua_concat(L, 3);  /* join them */
   }
-  lua_saveline(L, 1);
+  if(lua_saveline)
+	lua_saveline(L, 1);
   lua_remove(L, 1);  /* remove line */
   return status;
 }
@@ -467,6 +470,13 @@ static int pmain (lua_State *L) {
   if (!runargs(L, argv, (script > 0) ? script : argc)) return 0;
   /* execute main script (if there is one) */
   if (script && handle_script(L, argv, script) != LUA_OK) return 0;
+  if(args[has_i] || (script == 0 && !args[has_e] && !args[has_v]))
+  {
+#if defined(LUA_USE_DYNAMIC_READLINE) || defined(LUA_USE_READLINE)
+  	  lua_pushcfunction(L, luaopen_lreadline);
+	  lua_pcall(L, 0, 0, 0);
+#endif
+  }
   if (args[has_i])  /* -i option? */
     dotty(L);
   else if (script == 0 && !args[has_e] && !args[has_v]) {  /* no arguments? */

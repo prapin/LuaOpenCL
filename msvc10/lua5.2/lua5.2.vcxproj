@@ -59,6 +59,7 @@
     <ClCompile Include="../../Lua/5.2/lundump.c" />
     <ClCompile Include="../../Lua/5.2/lvm.c" />
     <ClCompile Include="../../Lua/5.2/lzio.c" />
+    <ClCompile Include="..\..\Lua\5.2\lreadline.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="../../Lua/5.2/lapi.h" />

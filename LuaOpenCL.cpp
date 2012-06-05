@@ -7,6 +7,13 @@ extern "C" {
 #include <assert.h>
 #include <new>
 
+// Backward compatibility for Lua 5.1
+#if LUA_VERSION_NUM == 501
+#define LUA_NUMTAGS 9
+#define lua_rawlen lua_objlen
+#define luaL_newlib(L,t) luaL_register(L,"cl",t)
+#endif
+
 typedef void (*push_t)(lua_State*L, const void* value, size_t size);
 
 enum eInfoTable

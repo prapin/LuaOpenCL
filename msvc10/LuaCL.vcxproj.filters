@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Lua">
+      <UniqueIdentifier>{dc6f618d-cbc5-40de-b527-503b9f1711cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenCL">
+      <UniqueIdentifier>{b852b14d-6af6-409b-8a0a-b3f90b24f4b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenCL\1.0">
+      <UniqueIdentifier>{1298afa6-402b-456a-8ee2-90bef7015d3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenCL\1.1">
+      <UniqueIdentifier>{49fcf7b1-efe5-4499-9fa7-d6e6abd53f54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenCL\1.2">
+      <UniqueIdentifier>{5ffc5d4c-948d-412a-a152-491f368c1ff3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\lua\5.2\lapi.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lauxlib.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lbaselib.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lbitlib.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lcode.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lcorolib.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lctype.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\ldblib.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\ldebug.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\ldo.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\ldump.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lfunc.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lgc.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\linit.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\liolib.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\llex.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lmathlib.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lmem.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\loadlib.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lobject.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lopcodes.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\loslib.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lparser.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lstate.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lstring.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lstrlib.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\ltable.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\ltablib.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\ltm.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lundump.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lvm.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lzio.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\5.2\lua.c">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LuaCL.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\lua\5.2\lapi.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\lauxlib.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\lcode.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\lctype.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\ldebug.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\ldo.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\lfunc.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\lgc.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\llex.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\llimits.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\lmem.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\lobject.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\lopcodes.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\lparser.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\lstate.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\lstring.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\ltable.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\ltm.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\lua.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\lua.hpp">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\luaconf.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\lualib.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\lundump.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\lvm.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\5.2\lzio.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.0\CL\cl.h">
+      <Filter>OpenCL\1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.0\CL\cl_d3d10.h">
+      <Filter>OpenCL\1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.0\CL\cl_ext.h">
+      <Filter>OpenCL\1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.0\CL\cl_gl.h">
+      <Filter>OpenCL\1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.0\CL\cl_gl_ext.h">
+      <Filter>OpenCL\1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.0\CL\cl_platform.h">
+      <Filter>OpenCL\1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.0\CL\opencl.h">
+      <Filter>OpenCL\1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.1\CL\cl.h">
+      <Filter>OpenCL\1.1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.1\CL\cl_d3d10.h">
+      <Filter>OpenCL\1.1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.1\CL\cl_ext.h">
+      <Filter>OpenCL\1.1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.1\CL\cl_gl.h">
+      <Filter>OpenCL\1.1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.1\CL\cl_gl_ext.h">
+      <Filter>OpenCL\1.1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.1\CL\cl_platform.h">
+      <Filter>OpenCL\1.1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.1\CL\opencl.h">
+      <Filter>OpenCL\1.1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.2\CL\cl.h">
+      <Filter>OpenCL\1.2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.2\CL\cl_d3d10.h">
+      <Filter>OpenCL\1.2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.2\CL\cl_d3d11.h">
+      <Filter>OpenCL\1.2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.2\CL\cl_dx9_media_sharing.h">
+      <Filter>OpenCL\1.2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.2\CL\cl_ext.h">
+      <Filter>OpenCL\1.2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.2\CL\cl_gl.h">
+      <Filter>OpenCL\1.2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.2\CL\cl_gl_ext.h">
+      <Filter>OpenCL\1.2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.2\CL\cl_platform.h">
+      <Filter>OpenCL\1.2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenCL\1.2\CL\opencl.h">
+      <Filter>OpenCL\1.2</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\OpenCL\1.2\lib\x86\OpenCL.lib">
+      <Filter>OpenCL</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\test.lua" />
+  </ItemGroup>
+</Project>

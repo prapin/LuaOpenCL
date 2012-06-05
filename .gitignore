@@ -1,0 +1,14 @@
+README.html
+*.bak
+*o
+*.obj
+*.exe
+*.ilk
+*.pdb
+*.dll
+*.opensdf
+*.sdf
+*.vcxproj.user
+msvc10/Debug/
+msvc10/ipch/
+msvc10/Release/

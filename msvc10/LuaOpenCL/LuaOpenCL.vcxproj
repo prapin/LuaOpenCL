@@ -19,6 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <Import Project="$(SolutionDir)\common.props" />
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
+    <Link>
+      <AdditionalDependencies>..\..\OpenCL\$(OpenCLVersion)\lib\x86_64\OpenCL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='Win32'">
+    <Link>
+      <AdditionalDependencies>..\..\OpenCL\$(OpenCLVersion)\lib\x86\OpenCL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\OpenCL\1.0\CL\cl.h" />
     <ClInclude Include="..\..\OpenCL\1.0\CL\cl_d3d10.h" />
@@ -43,9 +53,6 @@
     <ClInclude Include="..\..\OpenCL\1.2\CL\cl_gl_ext.h" />
     <ClInclude Include="..\..\OpenCL\1.2\CL\cl_platform.h" />
     <ClInclude Include="..\..\OpenCL\1.2\CL\opencl.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="..\..\OpenCL\1.2\lib\x86\OpenCL.lib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\test.lua" />

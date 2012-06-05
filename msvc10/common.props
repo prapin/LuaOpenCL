@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Label="Configuration">
+  <PropertyGroup>
+    <LuaVersion>5.2</LuaVersion>
+    <OpenCLVersion>1.1</OpenCLVersion>
     <CharacterSet>Unicode</CharacterSet>
+    <OutDir>../bin/$(Platform)$(Configuration)\</OutDir>
+    <IntDir>../obj/$(ProjectName)/$(Platform)$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
     <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OutDir>../bin/$(Platform)$(Configuration)\</OutDir>
-    <IntDir>../obj/$(ProjectName)/$(Platform)$(Configuration)\</IntDir>
-    <LuaVersion>5.2</LuaVersion>
   </PropertyGroup>
 
   <ItemDefinitionGroup>

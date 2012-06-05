@@ -400,12 +400,12 @@ static int cl_new_context(lua_State* L)
 		int top = lua_gettop(L);
 		for(size_t i=0;i<nb;i++)
 		{
-			lua_rawgeti(L, 1, i+1);
+			lua_rawgeti(L, 1, (int)i+1);
 			CLDevice* dev = (CLDevice*)CLObject::CheckObject(L, top+1, "device");
 			devices[i] = *dev;
 			lua_settop(L, top);
 		}
-		context = clCreateContext(properties, nb, devices, NULL, NULL, &err);
+		context = clCreateContext(properties, (cl_uint)nb, devices, NULL, NULL, &err);
 	}
 	else
 	{

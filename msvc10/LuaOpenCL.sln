@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LuaOpenCL", "LuaOpenCL\LuaOpenCL.vcxproj", "{99E583E8-0EF1-09F2-8E90-2E465604CE1E}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua5.2", "lua5.2\lua5.2.vcxproj", "{D09AA13C-37B8-4D12-97FC-0CB849BCD79E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua5.1", "lua5.1\lua5.1.vcxproj", "{63A19511-D121-496D-B32D-D0B72FA4E677}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LuaOpenCL", "LuaOpenCL\LuaOpenCL.vcxproj", "{99E583E8-0EF1-09F2-8E90-2E465604CE1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

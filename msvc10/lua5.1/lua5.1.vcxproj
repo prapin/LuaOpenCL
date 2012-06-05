@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{63A19511-D121-496D-B32D-D0B72FA4E677}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>  
+  <Import Project="$(SolutionDir)\libcommon.props" />
+  <ItemGroup>
+    <ClCompile Include="../../Lua/5.1/lapi.c" />
+    <ClCompile Include="../../Lua/5.1/lauxlib.c" />
+    <ClCompile Include="../../Lua/5.1/lbaselib.c" />
+    <ClCompile Include="../../Lua/5.1/lcode.c" />
+    <ClCompile Include="../../Lua/5.1/ldblib.c" />
+    <ClCompile Include="../../Lua/5.1/ldebug.c" />
+    <ClCompile Include="../../Lua/5.1/ldo.c" />
+    <ClCompile Include="../../Lua/5.1/ldump.c" />
+    <ClCompile Include="../../Lua/5.1/lfunc.c" />
+    <ClCompile Include="../../Lua/5.1/lgc.c" />
+    <ClCompile Include="../../Lua/5.1/linit.c" />
+    <ClCompile Include="../../Lua/5.1/liolib.c" />
+    <ClCompile Include="../../Lua/5.1/llex.c" />
+    <ClCompile Include="../../Lua/5.1/lmathlib.c" />
+    <ClCompile Include="../../Lua/5.1/lmem.c" />
+    <ClCompile Include="../../Lua/5.1/loadlib.c" />
+    <ClCompile Include="../../Lua/5.1/lobject.c" />
+    <ClCompile Include="../../Lua/5.1/lopcodes.c" />
+    <ClCompile Include="../../Lua/5.1/loslib.c" />
+    <ClCompile Include="../../Lua/5.1/lparser.c" />
+    <ClCompile Include="../../Lua/5.1/lstate.c" />
+    <ClCompile Include="../../Lua/5.1/lstring.c" />
+    <ClCompile Include="../../Lua/5.1/lstrlib.c" />
+    <ClCompile Include="../../Lua/5.1/ltable.c" />
+    <ClCompile Include="../../Lua/5.1/ltablib.c" />
+    <ClCompile Include="../../Lua/5.1/ltm.c" />
+    <ClCompile Include="../../Lua/5.1/lundump.c" />
+    <ClCompile Include="../../Lua/5.1/lvm.c" />
+    <ClCompile Include="../../Lua/5.1/lzio.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="../../Lua/5.1/lapi.h" />
+    <ClInclude Include="../../Lua/5.1/lauxlib.h" />
+    <ClInclude Include="../../Lua/5.1/lcode.h" />
+    <ClInclude Include="../../Lua/5.1/ldebug.h" />
+    <ClInclude Include="../../Lua/5.1/ldo.h" />
+    <ClInclude Include="../../Lua/5.1/lfunc.h" />
+    <ClInclude Include="../../Lua/5.1/lgc.h" />
+    <ClInclude Include="../../Lua/5.1/llex.h" />
+    <ClInclude Include="../../Lua/5.1/llimits.h" />
+    <ClInclude Include="../../Lua/5.1/lmem.h" />
+    <ClInclude Include="../../Lua/5.1/lobject.h" />
+    <ClInclude Include="../../Lua/5.1/lopcodes.h" />
+    <ClInclude Include="../../Lua/5.1/lparser.h" />
+    <ClInclude Include="../../Lua/5.1/lstate.h" />
+    <ClInclude Include="../../Lua/5.1/lstring.h" />
+    <ClInclude Include="../../Lua/5.1/ltable.h" />
+    <ClInclude Include="../../Lua/5.1/ltm.h" />
+    <ClInclude Include="../../Lua/5.1/lua.h" />
+    <ClInclude Include="../../Lua/5.1/luaconf.h" />
+    <ClInclude Include="../../Lua/5.1/lualib.h" />
+    <ClInclude Include="../../Lua/5.1/lundump.h" />
+    <ClInclude Include="../../Lua/5.1/lvm.h" />
+    <ClInclude Include="../../Lua/5.1/lzio.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <Import Project="$(SolutionDir)\common.props" />
+  <ItemGroup>
+    <ClInclude Include="..\..\OpenCL\1.0\CL\cl.h" />
+    <ClInclude Include="..\..\OpenCL\1.0\CL\cl_d3d10.h" />
+    <ClInclude Include="..\..\OpenCL\1.0\CL\cl_ext.h" />
+    <ClInclude Include="..\..\OpenCL\1.0\CL\cl_gl.h" />
+    <ClInclude Include="..\..\OpenCL\1.0\CL\cl_gl_ext.h" />
+    <ClInclude Include="..\..\OpenCL\1.0\CL\cl_platform.h" />
+    <ClInclude Include="..\..\OpenCL\1.0\CL\opencl.h" />
+    <ClInclude Include="..\..\OpenCL\1.1\CL\cl.h" />
+    <ClInclude Include="..\..\OpenCL\1.1\CL\cl_d3d10.h" />
+    <ClInclude Include="..\..\OpenCL\1.1\CL\cl_ext.h" />
+    <ClInclude Include="..\..\OpenCL\1.1\CL\cl_gl.h" />
+    <ClInclude Include="..\..\OpenCL\1.1\CL\cl_gl_ext.h" />
+    <ClInclude Include="..\..\OpenCL\1.1\CL\cl_platform.h" />
+    <ClInclude Include="..\..\OpenCL\1.1\CL\opencl.h" />
+    <ClInclude Include="..\..\OpenCL\1.2\CL\cl.h" />
+    <ClInclude Include="..\..\OpenCL\1.2\CL\cl_d3d10.h" />
+    <ClInclude Include="..\..\OpenCL\1.2\CL\cl_d3d11.h" />
+    <ClInclude Include="..\..\OpenCL\1.2\CL\cl_dx9_media_sharing.h" />
+    <ClInclude Include="..\..\OpenCL\1.2\CL\cl_ext.h" />
+    <ClInclude Include="..\..\OpenCL\1.2\CL\cl_gl.h" />
+    <ClInclude Include="..\..\OpenCL\1.2\CL\cl_gl_ext.h" />
+    <ClInclude Include="..\..\OpenCL\1.2\CL\cl_platform.h" />
+    <ClInclude Include="..\..\OpenCL\1.2\CL\opencl.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\OpenCL\1.2\lib\x86\OpenCL.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\test.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\LuaCL.cpp" />
+    <ClCompile Include="..\..\Lua\5.2\lua.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -6,6 +6,7 @@ README.html
 *.ilk
 *.pdb
 *.dll
+*.log
 *.opensdf
 *.sdf
 *.vcxproj.user

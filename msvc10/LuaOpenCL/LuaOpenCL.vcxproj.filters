@@ -15,85 +15,86 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\LuaCL.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\OpenCL\1.0\CL\cl.h">
+    <ClInclude Include="..\..\OpenCL\1.0\CL\cl.h">
       <Filter>OpenCL\1.0</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.0\CL\cl_d3d10.h">
+    <ClInclude Include="..\..\OpenCL\1.0\CL\cl_d3d10.h">
       <Filter>OpenCL\1.0</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.0\CL\cl_ext.h">
+    <ClInclude Include="..\..\OpenCL\1.0\CL\cl_ext.h">
       <Filter>OpenCL\1.0</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.0\CL\cl_gl.h">
+    <ClInclude Include="..\..\OpenCL\1.0\CL\cl_gl.h">
       <Filter>OpenCL\1.0</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.0\CL\cl_gl_ext.h">
+    <ClInclude Include="..\..\OpenCL\1.0\CL\cl_gl_ext.h">
       <Filter>OpenCL\1.0</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.0\CL\cl_platform.h">
+    <ClInclude Include="..\..\OpenCL\1.0\CL\cl_platform.h">
       <Filter>OpenCL\1.0</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.0\CL\opencl.h">
+    <ClInclude Include="..\..\OpenCL\1.0\CL\opencl.h">
       <Filter>OpenCL\1.0</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.1\CL\cl.h">
+    <ClInclude Include="..\..\OpenCL\1.1\CL\cl.h">
       <Filter>OpenCL\1.1</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.1\CL\cl_d3d10.h">
+    <ClInclude Include="..\..\OpenCL\1.1\CL\cl_d3d10.h">
       <Filter>OpenCL\1.1</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.1\CL\cl_ext.h">
+    <ClInclude Include="..\..\OpenCL\1.1\CL\cl_ext.h">
       <Filter>OpenCL\1.1</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.1\CL\cl_gl.h">
+    <ClInclude Include="..\..\OpenCL\1.1\CL\cl_gl.h">
       <Filter>OpenCL\1.1</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.1\CL\cl_gl_ext.h">
+    <ClInclude Include="..\..\OpenCL\1.1\CL\cl_gl_ext.h">
       <Filter>OpenCL\1.1</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.1\CL\cl_platform.h">
+    <ClInclude Include="..\..\OpenCL\1.1\CL\cl_platform.h">
       <Filter>OpenCL\1.1</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.1\CL\opencl.h">
+    <ClInclude Include="..\..\OpenCL\1.1\CL\opencl.h">
       <Filter>OpenCL\1.1</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.2\CL\cl.h">
+    <ClInclude Include="..\..\OpenCL\1.2\CL\cl.h">
       <Filter>OpenCL\1.2</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.2\CL\cl_d3d10.h">
+    <ClInclude Include="..\..\OpenCL\1.2\CL\cl_d3d10.h">
       <Filter>OpenCL\1.2</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.2\CL\cl_d3d11.h">
+    <ClInclude Include="..\..\OpenCL\1.2\CL\cl_d3d11.h">
       <Filter>OpenCL\1.2</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.2\CL\cl_dx9_media_sharing.h">
+    <ClInclude Include="..\..\OpenCL\1.2\CL\cl_dx9_media_sharing.h">
       <Filter>OpenCL\1.2</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.2\CL\cl_ext.h">
+    <ClInclude Include="..\..\OpenCL\1.2\CL\cl_ext.h">
       <Filter>OpenCL\1.2</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.2\CL\cl_gl.h">
+    <ClInclude Include="..\..\OpenCL\1.2\CL\cl_gl.h">
       <Filter>OpenCL\1.2</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.2\CL\cl_gl_ext.h">
+    <ClInclude Include="..\..\OpenCL\1.2\CL\cl_gl_ext.h">
       <Filter>OpenCL\1.2</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.2\CL\cl_platform.h">
+    <ClInclude Include="..\..\OpenCL\1.2\CL\cl_platform.h">
       <Filter>OpenCL\1.2</Filter>
     </ClInclude>
-    <ClInclude Include="..\OpenCL\1.2\CL\opencl.h">
+    <ClInclude Include="..\..\OpenCL\1.2\CL\opencl.h">
       <Filter>OpenCL\1.2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\OpenCL\1.2\lib\x86\OpenCL.lib">
+    <Library Include="..\..\OpenCL\1.2\lib\x86\OpenCL.lib">
       <Filter>OpenCL</Filter>
     </Library>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\test.lua" />
+    <None Include="..\..\test.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\LuaCL.cpp" />
+    <ClCompile Include="..\..\Lua\5.2\lua.c" />
   </ItemGroup>
 </Project>

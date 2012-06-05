@@ -95,6 +95,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\LuaCL.cpp" />
-    <ClCompile Include="..\..\Lua\5.2\lua.c" />
+    <ClCompile Include="..\..\Lua\$(LuaVersion)\lua.c" />
   </ItemGroup>
 </Project>

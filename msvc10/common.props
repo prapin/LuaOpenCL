@@ -10,13 +10,14 @@
   <PropertyGroup>
     <OutDir>../bin/$(Platform)$(Configuration)\</OutDir>
     <IntDir>../obj/$(ProjectName)/$(Platform)$(Configuration)\</IntDir>
+    <LuaVersion>5.2</LuaVersion>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
     <ClCompile>
       <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_AFXDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>../../lua/5.2;../../OpenCL/1.1;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../lua/$(LuaVersion);../../OpenCL/1.1;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -49,7 +50,7 @@
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ItemGroup>
-    <ProjectReference Include="..\lua5.2\lua5.2.vcxproj">
+    <ProjectReference Include="..\lua$(LuaVersion)\lua$(LuaVersion).vcxproj">
       <Project>{63a19511-d121-496d-b32d-d0b72fa4e677}</Project>
     </ProjectReference>
   </ItemGroup>

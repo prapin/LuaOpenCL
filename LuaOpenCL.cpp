@@ -59,6 +59,7 @@ static int getEnumTable(const enum_list_t*& ptable, enumTypes enum_type);
 static void error_check(lua_State* L, int error_code);
 static void pushEnum(lua_State*L, const void* ptr, size_t size, enumTypes enum_type);
 static void pushBitField(lua_State*L, const void* ptr, size_t size, enumTypes enum_type);
+static const void* GetPropertiesV(lua_State* L, int index, enumTypes enum_type);
 
 template<class obj_t, class param_t> static obj_t* pushNewObject(lua_State*L, param_t param)
 {
@@ -97,6 +98,7 @@ template<> static void push<void*>(lua_State*L, const void* ptr, size_t size) { 
 
 template<enumTypes enum_type> static void pushEnum(lua_State*L, const void* ptr, size_t size) { pushEnum(L, ptr, size, enum_type); }
 template<enumTypes enum_type> static void pushBitField(lua_State*L, const void* ptr, size_t size) { pushBitField(L, ptr, size, enum_type); }
+template<class T> const T* GetProperties(lua_State* L, int index, enumTypes enum_type) { return (const T*) GetPropertiesV(L, index, enum_type); }
 
 template<> static void push<cl_image_format>(lua_State*L, const void* ptr, size_t size) 
 { 
@@ -300,6 +302,7 @@ public:
 #ifdef CL_VERSION_1_2
 	virtual void Retain() { clRetainDevice(Handle); }
 	virtual void Release() { clReleaseDevice(Handle); }
+	//void { clCreateSubDevices(Handle,  } TODO
 #endif
 	operator cl_device_id const() { return Handle; }
 	virtual const char* GetClassName() { return "device"; }
@@ -394,12 +397,12 @@ static int cl_new_context(lua_State* L)
 {
 	cl_int err;
 	cl_context context;
-	cl_context_properties *properties = NULL;
+	const cl_context_properties *properties = NULL;
 	lua_settop(L, 3);
 	check_type(L, 1, 1<<LUA_TTABLE|1<<LUA_TSTRING);
 	check_type(L, 2, 1<<LUA_TTABLE|1<<LUA_TNIL);
 	if(lua_type(L, 2) == LUA_TTABLE)
-		; // TODO
+		properties = GetProperties<cl_context_properties>(L, 2, EBT_CONTEXT_PROPERTIES);
 	if(lua_type(L, 1) == LUA_TTABLE)
 	{
 		size_t nb = lua_rawlen(L, 1);
@@ -862,4 +865,29 @@ static void error_check(lua_State* L, int error_code)
 		}
 	}
 	luaL_error(L, "OpenCL: %s", str);
+}
+
+static const void* GetPropertiesV(lua_State* L, int index, enumTypes enum_type)
+{
+	if(lua_type(L, index) != LUA_TTABLE)
+		return NULL;
+	lua_pushnil(L);
+	int top = lua_gettop(L);
+	lua_pushnil(L);
+	luaL_Buffer b;
+	luaL_buffinit(L, &b);
+	luaL_pushresult(&b);
+	while(1)
+	{
+		lua_pushvalue(L, top);
+		if(lua_next(L, index) == 0)
+			break;
+		lua_replace(L, top+1);
+		lua_replace(L, top);
+		int val;
+		luaL_addlstring(&b, (const char*)&val, sizeof(val));
+		// TODO: finish this function
+	}
+	lua_replace(L, index);
+	return lua_tostring(L, index);
 }

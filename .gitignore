@@ -10,6 +10,6 @@ README.html
 *.opensdf
 *.sdf
 *.vcxproj.user
-msvc10/Debug/
+msvc10/bin/
 msvc10/ipch/
-msvc10/Release/
+msvc10/obj/

@@ -86,13 +86,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\..\OpenCL\$(OpenCLVersion)\lib\x86\OpenCL.lib" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\test.lua" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\Lua\$(LuaVersion)\lua.c" />
     <ClCompile Include="..\..\LuaOpenCL.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\test\test.lua" />
+    <None Include="..\..\test\utils.lua" />
   </ItemGroup>
 </Project>

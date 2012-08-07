@@ -257,6 +257,7 @@ cl_uint getEnum(lua_State*L, int idx, enumTypes enum_type)
 			negate = false;
 		}
 		lua_pop(L, 1);
+		break;
 	}
 	case LUA_TTABLE:
 	{
@@ -267,6 +268,7 @@ cl_uint getEnum(lua_State*L, int idx, enumTypes enum_type)
 			value |= findEnumValue(L, lua_tostring(L, -1), ptable, len);
 			lua_pop(L, 1);
 		}
+		break;
 	}
 	default:
 		luaL_error(L, "Expected enumeration for argument %d, found %s", idx, lua_typename(L, type));
@@ -482,7 +484,7 @@ static int cl_new_context(lua_State* L)
 		{
 			*pprop++ = CL_CONTEXT_PLATFORM;
 			CLPlatform* platform = (CLPlatform*) CLObject::CheckObject(L, -1, "platform");
-			*pprop++ = (cl_context_properties)(cl_platform_id)platform;
+			*pprop++ = (cl_context_properties)(cl_platform_id)*platform;
 		}
 #ifdef CL_VERSION_1_2
 		lua_getfield(L, 2, "user_sync");
@@ -495,13 +497,12 @@ static int cl_new_context(lua_State* L)
 	{
 		size_t nb = lua_rawlen(L, 1);
 		cl_device_id* devices = (cl_device_id*)lua_newuserdata(L, nb*sizeof(cl_device_id));
-		int top = lua_gettop(L);
 		for(size_t i=0;i<nb;i++)
 		{
 			lua_rawgeti(L, 1, (int)i+1);
-			CLDevice* dev = (CLDevice*)CLObject::CheckObject(L, top+1, "device");
+			CLDevice* dev = (CLDevice*)CLObject::CheckObject(L, -1, "device");
 			devices[i] = *dev;
-			lua_settop(L, top);
+			lua_pop(L, 1);
 		}
 		context = clCreateContext(properties, (cl_uint)nb, devices, NULL, NULL, &err);
 	}

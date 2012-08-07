@@ -55,11 +55,12 @@
     <ClInclude Include="..\..\OpenCL\1.2\CL\opencl.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\test.lua" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\LuaOpenCL.cpp" />
     <ClCompile Include="..\..\Lua\$(LuaVersion)\lua.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\test\test.lua" />
+    <None Include="..\..\test\utils.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

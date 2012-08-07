@@ -5,6 +5,7 @@ extern "C" {
 }
 #include <string.h>
 #include <assert.h>
+#include <ctype.h>
 #include <new>
 
 // Backward compatibility for Lua 5.1
@@ -58,6 +59,7 @@ static int getInfoTable(const info_list_t*& pinfo, eInfoTable info_table);
 static int getEnumTable(const enum_list_t*& ptable, enumTypes enum_type);
 static void error_check(lua_State* L, int error_code);
 static void pushEnum(lua_State*L, const void* ptr, size_t size, enumTypes enum_type);
+static cl_uint getEnum(lua_State*L, int index, enumTypes enum_type);
 static void pushBitField(lua_State*L, const void* ptr, size_t size, enumTypes enum_type);
 
 template<class obj_t, class param_t> static obj_t* pushNewObject(lua_State*L, param_t param)
@@ -202,21 +204,80 @@ void pushBinaries(lua_State*L, const void* ptr, size_t size)
 	lua_replace(L, -2);
 }
 
-int GetEnumValue(lua_State* L, enumTypes enum_type, const char* str)
+static int findEnumValue(lua_State* L, const char* str, const enum_list_t* ptable, int len)
 {
-	const enum_list_t* ptable;
-	int len = getEnumTable(ptable, enum_type);
 	for(int i=0;i<len;i++)
 		if(strcmp(ptable[i].name, str) == 0)
 			return ptable[i].value;
 	luaL_error(L, "enumeration value '%s' not found", str);
 	return 0;
 }
+
+cl_uint getEnum(lua_State*L, int idx, enumTypes enum_type)
+{
+	const enum_list_t* ptable;
+	int len = getEnumTable(ptable, enum_type);
+	int type = lua_type(L, idx);
+	cl_uint value = 0;
+	switch(type)
+	{
+	case LUA_TNONE:
+	case LUA_TNIL:
+		break;
+	case LUA_TNUMBER:
+		value = lua_tointeger(L, idx);
+		break;
+	case LUA_TSTRING:
+	{
+		size_t slen;
+		const char* str = lua_tolstring(L, idx, &slen);
+		char* pval = (char*)lua_newuserdata(L, slen+1);
+		memcpy(pval, str, slen+1);
+		char* pvalend = pval + slen;
+		bool negate = false;
+		while(pval < pvalend)
+		{
+			if(*pval == '~')
+				negate = true;
+			if(!isalnum(*pval) && *pval != '_')
+			{
+				pval++;
+				continue;
+			}
+			char* pnext = pval;
+			while(isalnum(*pnext) || *pnext == '_')
+				pnext++;
+			*pnext = 0;
+			int v = findEnumValue(L, pval, ptable, len);
+			if(negate)
+				value &= ~v;
+			else
+				value |= v;
+			pval = pnext;
+			negate = false;
+		}
+		lua_pop(L, 1);
+	}
+	case LUA_TTABLE:
+	{
+		size_t tlen = lua_rawlen(L, idx);
+		for(size_t i=0;i<tlen;i++)
+		{
+			lua_rawgeti(L, idx, (int)i+1);
+			value |= findEnumValue(L, lua_tostring(L, -1), ptable, len);
+			lua_pop(L, 1);
+		}
+	}
+	default:
+		luaL_error(L, "Expected enumeration for argument %d, found %s", idx, lua_typename(L, type));
+	}
+	return value;
+}
+
 static void context_info(lua_State* L)
 {
 #if 0
 	cl_device_id device;
-	push_info(L, to_object<cl_command_queue>(L), IT_QUEUE, clGetCommandQueueInfo);
 	push_info(L, to_object<cl_mem>(L), IT_MEM, clGetMemObjectInfo);
 	push_info(L, to_object<cl_mem>(L), IT_IMAGE, clGetImageInfo);
 	push_info(L, to_object<cl_sampler>(L), IT_SAMPLER, clGetSamplerInfo);
@@ -312,7 +373,7 @@ class CLPlatform : public CLObject
 {
 public:
 	CLPlatform(cl_platform_id id) : Handle(id) {}
-	cl_platform_id GetID() { return Handle; }
+	operator cl_platform_id const() { return Handle; }
 	virtual int GetInfo(lua_State* L) { return push_info(L, Handle, IT_PLATFORM, clGetPlatformInfo); }
 	virtual const char* GetClassName() { return "platform"; }
 	int GetDevices(lua_State* L)
@@ -342,13 +403,26 @@ class CLContext : public CLObject
 {
 public:
 	CLContext(cl_context id) : Handle(id) {}
+	operator cl_context const() { return Handle; }
 	virtual void Retain() { clRetainContext(Handle); }
 	virtual void Release() { clReleaseContext(Handle); }
-	operator cl_context const() { return Handle; }
 	virtual const char* GetClassName() { return "context"; }
 	virtual int GetInfo(lua_State* L) { return push_info(L, Handle, IT_CONTEXT, clGetContextInfo); }
 private:
 	cl_context Handle;
+};
+
+class CLQueue : public CLObject
+{
+public:
+	CLQueue(cl_command_queue id) : Handle(id) {}
+	operator cl_command_queue const() { return Handle; }
+	virtual void Retain() { clRetainCommandQueue(Handle); }
+	virtual void Release() { clReleaseCommandQueue(Handle); }
+	virtual const char* GetClassName() { return "queue"; }
+	virtual int GetInfo(lua_State* L) { return push_info(L, Handle, IT_QUEUE, clGetCommandQueueInfo); }
+private:
+	cl_command_queue Handle;
 };
 
 template<> static void push<cl_platform_id>(lua_State*L, const void* ptr, size_t size) { pushNewObject<CLPlatform>(L, *(const cl_platform_id*)ptr); }
@@ -391,6 +465,7 @@ static void check_type(lua_State* L, int idx, int types)
 	luaL_pushresult(&buf);
 	luaL_error(L, "expected type %s for argument %d, got %s", lua_tostring(L, -1), idx, lua_typename(L, t));
 }
+
 static int cl_new_context(lua_State* L)
 {
 	cl_int err;
@@ -407,7 +482,7 @@ static int cl_new_context(lua_State* L)
 		{
 			*pprop++ = CL_CONTEXT_PLATFORM;
 			CLPlatform* platform = (CLPlatform*) CLObject::CheckObject(L, -1, "platform");
-			*pprop++ = (cl_context_properties)platform->GetID();
+			*pprop++ = (cl_context_properties)(cl_platform_id)platform;
 		}
 #ifdef CL_VERSION_1_2
 		lua_getfield(L, 2, "user_sync");
@@ -432,17 +507,31 @@ static int cl_new_context(lua_State* L)
 	}
 	else
 	{
-		cl_device_type devtype = GetEnumValue(L, EBT_DEVICE_TYPE, lua_tostring(L, 1));
+		cl_device_type devtype = getEnum(L, 1, EBT_DEVICE_TYPE);
 		context = clCreateContextFromType(properties, devtype, NULL, NULL, &err);
 	}
 	error_check(L, err);
 	pushNewObject<CLContext>(L, context)->Release();
 	return 1;
 }
+
+static int cl_new_queue(lua_State* L)
+{
+	CLContext* context = (CLContext*)CLObject::CheckObject(L, 1, "context");
+	CLDevice* dev = (CLDevice*)CLObject::CheckObject(L, 2, "device");
+	cl_command_queue_properties properties = getEnum(L, 3, EBT_COMMAND_QUEUE_PROPERTIES);
+	cl_int err;
+	cl_command_queue queue = clCreateCommandQueue(*context, *dev, properties, &err);
+	error_check(L, err);
+	pushNewObject<CLQueue>(L, queue)->Release();
+	return 1;
+}
+
 static const luaL_Reg cllib[] = 
 {
 	{ "platforms",   cl_platforms},
 	{ "context",     cl_new_context},
+	{ "queue",       cl_new_queue},
 	{ NULL, NULL}
 };
 

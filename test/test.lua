@@ -14,7 +14,9 @@ print(utils.dumplua(info))
 utils.put(utils.dumplua(info), 'FILE:c:/temp/luaCL/out.txt')
 
 ctx = cl.context(p[1].devices(), {platform = p[1]})
-print(utils.dumplua(ctx.info()))
-queue = cl.queue(ctx, p[1].devices()[1], {"profiling_enable", "out_of_order_exec_mode_enable"})
-print(utils.dumplua(queue.info()))
+print(ctx, utils.dumplua(ctx.info()))
+queue = ctx.queue(p[1].devices()[1], {"profiling_enable", "out_of_order_exec_mode_enable"})
+print(queue, utils.dumplua(queue.info()))
+buffer = ctx.buffer(("ABCD"):rep(10000))
+print(buffer, utils.dumplua(buffer.info()))
 -- "out_of_order_exec_mode_enable"  "profiling_enable" 

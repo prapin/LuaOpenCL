@@ -410,6 +410,14 @@ public:
 	virtual void Release() { clReleaseContext(Handle); }
 	virtual const char* GetClassName() { return "context"; }
 	virtual int GetInfo(lua_State* L) { return push_info(L, Handle, IT_CONTEXT, clGetContextInfo); }
+	int NewQueue(lua_State* L);
+	int NewBuffer(lua_State* L);
+	virtual void AddMethods(lua_State* L)
+	{
+		CLObject::AddMethods(L);
+		AddMethod(L, (lua_method)&CLContext::NewQueue, "queue");
+		AddMethod(L, (lua_method)&CLContext::NewBuffer, "buffer");
+	}
 private:
 	cl_context Handle;
 };
@@ -425,6 +433,25 @@ public:
 	virtual int GetInfo(lua_State* L) { return push_info(L, Handle, IT_QUEUE, clGetCommandQueueInfo); }
 private:
 	cl_command_queue Handle;
+};
+
+class CLMemory : public CLObject
+{
+public:
+	operator cl_mem const() { return Handle; }
+	virtual void Retain() { clRetainMemObject(Handle); }
+	virtual void Release() { clReleaseMemObject(Handle); }
+protected:
+	CLMemory(cl_mem id) : Handle(id) {}
+	cl_mem Handle;
+};
+
+class CLBuffer : public CLMemory
+{
+public:
+	CLBuffer(cl_mem id) : CLMemory(id) {}
+	virtual const char* GetClassName() { return "buffer"; }
+	virtual int GetInfo(lua_State* L) { return push_info(L, Handle, IT_MEM, clGetMemObjectInfo); }
 };
 
 template<> static void push<cl_platform_id>(lua_State*L, const void* ptr, size_t size) { pushNewObject<CLPlatform>(L, *(const cl_platform_id*)ptr); }
@@ -516,15 +543,34 @@ static int cl_new_context(lua_State* L)
 	return 1;
 }
 
-static int cl_new_queue(lua_State* L)
+int CLContext::NewQueue(lua_State* L)
 {
-	CLContext* context = (CLContext*)CLObject::CheckObject(L, 1, "context");
-	CLDevice* dev = (CLDevice*)CLObject::CheckObject(L, 2, "device");
-	cl_command_queue_properties properties = getEnum(L, 3, EBT_COMMAND_QUEUE_PROPERTIES);
+	CLDevice* dev = (CLDevice*)CLObject::CheckObject(L, 1, "device");
+	cl_command_queue_properties properties = getEnum(L, 2, EBT_COMMAND_QUEUE_PROPERTIES);
 	cl_int err;
-	cl_command_queue queue = clCreateCommandQueue(*context, *dev, properties, &err);
+	cl_command_queue queue = clCreateCommandQueue(Handle, *dev, properties, &err);
 	error_check(L, err);
 	pushNewObject<CLQueue>(L, queue)->Release();
+	return 1;
+}
+
+int CLContext::NewBuffer(lua_State* L)
+{
+	check_type(L, 1, 1<<LUA_TNUMBER|1<<LUA_TSTRING);
+	cl_mem_flags flags = getEnum(L, 2, EBT_MEM_FLAGS);
+	cl_mem buffer;
+	cl_int err;
+	if(lua_type(L, 1) == LUA_TNUMBER)
+		buffer = clCreateBuffer(Handle, flags, lua_tointeger(L, 1), NULL, &err);
+	else
+	{
+		// TODO: host buffer seems to be read/write. Study a bit.
+		size_t len;
+		const char* data = lua_tolstring(L, 1, &len);
+		buffer = clCreateBuffer(Handle, flags, len, (void*)data, &err);
+	}
+	error_check(L, err);
+	pushNewObject<CLBuffer>(L, buffer)->Release();
 	return 1;
 }
 
@@ -532,7 +578,6 @@ static const luaL_Reg cllib[] =
 {
 	{ "platforms",   cl_platforms},
 	{ "context",     cl_new_context},
-	{ "queue",       cl_new_queue},
 	{ NULL, NULL}
 };
 

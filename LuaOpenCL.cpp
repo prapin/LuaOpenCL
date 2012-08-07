@@ -59,7 +59,6 @@ static int getEnumTable(const enum_list_t*& ptable, enumTypes enum_type);
 static void error_check(lua_State* L, int error_code);
 static void pushEnum(lua_State*L, const void* ptr, size_t size, enumTypes enum_type);
 static void pushBitField(lua_State*L, const void* ptr, size_t size, enumTypes enum_type);
-static const void* GetPropertiesV(lua_State* L, int index, enumTypes enum_type);
 
 template<class obj_t, class param_t> static obj_t* pushNewObject(lua_State*L, param_t param)
 {
@@ -98,7 +97,6 @@ template<> static void push<void*>(lua_State*L, const void* ptr, size_t size) { 
 
 template<enumTypes enum_type> static void pushEnum(lua_State*L, const void* ptr, size_t size) { pushEnum(L, ptr, size, enum_type); }
 template<enumTypes enum_type> static void pushBitField(lua_State*L, const void* ptr, size_t size) { pushBitField(L, ptr, size, enum_type); }
-template<class T> const T* GetProperties(lua_State* L, int index, enumTypes enum_type) { return (const T*) GetPropertiesV(L, index, enum_type); }
 
 template<> static void push<cl_image_format>(lua_State*L, const void* ptr, size_t size) 
 { 
@@ -229,7 +227,6 @@ static void context_info(lua_State* L)
 	push_info(L, to_object<cl_event>(L), IT_EVENT, clGetEventInfo);
 	push_info(L, to_object<cl_event>(L), IT_PROFILING, clGetEventProfilingInfo);
 #endif
-	//return push_info(L, to_object<cl_context>(L), IT_CONTEXT, clGetContextInfo);
 }
 
 class CLObject
@@ -315,6 +312,7 @@ class CLPlatform : public CLObject
 {
 public:
 	CLPlatform(cl_platform_id id) : Handle(id) {}
+	cl_platform_id GetID() { return Handle; }
 	virtual int GetInfo(lua_State* L) { return push_info(L, Handle, IT_PLATFORM, clGetPlatformInfo); }
 	virtual const char* GetClassName() { return "platform"; }
 	int GetDevices(lua_State* L)
@@ -397,12 +395,27 @@ static int cl_new_context(lua_State* L)
 {
 	cl_int err;
 	cl_context context;
-	const cl_context_properties *properties = NULL;
+	cl_context_properties properties[5] = {0};
 	lua_settop(L, 3);
 	check_type(L, 1, 1<<LUA_TTABLE|1<<LUA_TSTRING);
 	check_type(L, 2, 1<<LUA_TTABLE|1<<LUA_TNIL);
 	if(lua_type(L, 2) == LUA_TTABLE)
-		properties = GetProperties<cl_context_properties>(L, 2, EBT_CONTEXT_PROPERTIES);
+	{
+		cl_context_properties *pprop = properties;
+		lua_getfield(L, 2, "platform");
+		if(!lua_isnil(L, -1))
+		{
+			*pprop++ = CL_CONTEXT_PLATFORM;
+			CLPlatform* platform = (CLPlatform*) CLObject::CheckObject(L, -1, "platform");
+			*pprop++ = (cl_context_properties)platform->GetID();
+		}
+#ifdef CL_VERSION_1_2
+		lua_getfield(L, 2, "user_sync");
+		*pprop++ = CL_CONTEXT_INTEROP_USER_SYNC;
+		*pprop++ = lua_toboolean(L, -1);
+#endif
+		lua_settop(L, 3);
+	}
 	if(lua_type(L, 1) == LUA_TTABLE)
 	{
 		size_t nb = lua_rawlen(L, 1);
@@ -867,27 +880,3 @@ static void error_check(lua_State* L, int error_code)
 	luaL_error(L, "OpenCL: %s", str);
 }
 
-static const void* GetPropertiesV(lua_State* L, int index, enumTypes enum_type)
-{
-	if(lua_type(L, index) != LUA_TTABLE)
-		return NULL;
-	lua_pushnil(L);
-	int top = lua_gettop(L);
-	lua_pushnil(L);
-	luaL_Buffer b;
-	luaL_buffinit(L, &b);
-	luaL_pushresult(&b);
-	while(1)
-	{
-		lua_pushvalue(L, top);
-		if(lua_next(L, index) == 0)
-			break;
-		lua_replace(L, top+1);
-		lua_replace(L, top);
-		int val;
-		luaL_addlstring(&b, (const char*)&val, sizeof(val));
-		// TODO: finish this function
-	}
-	lua_replace(L, index);
-	return lua_tostring(L, index);
-}
